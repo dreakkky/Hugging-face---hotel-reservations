@@ -15,7 +15,8 @@ print(dataset.tail())
 print(dataset.dtypes)
 print(dataset.isnull().sum()) # missing values
 
-X, y = dataset.drop(columns=["is_canceled"]), dataset["is_canceled"]
+leaky_columns = ["reservation_status", "reservation_status_date"]
+X, y = dataset.drop(columns=["is_canceled"] + leaky_columns), dataset["is_canceled"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 
@@ -51,4 +52,4 @@ prediction = model.predict(X_test)
 print(f"prediction: {prediction}")
 
 mae = mean_absolute_error(y_test, prediction)
-print(f"mae: {mae}")
+print(f"mae: {mae:.5f}")
